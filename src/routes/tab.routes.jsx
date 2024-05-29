@@ -16,11 +16,11 @@ const TabRoutes = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: true,
-        tabBarActiveTintColor: "#E25252",
+        tabBarActiveTintColor: "#FF0000",
         tabBarStyle: {
           position: "absolute",
           elevation: 0,
-          backgroundColor: "#3A3954",
+          backgroundColor: "#000000",
           height: 80,
           shadowColor: "#000",
           shadowOffset: {
@@ -32,12 +32,12 @@ const TabRoutes = () => {
           elevation: 21,
         },
         tabBarIconStyle: {
-          marginBottom: -10, 
+          marginBottom: -10,
         },
         headerStyle: {
-          backgroundColor: "#3A3954",      
+          backgroundColor: "#000000",
         },
-        headerTintColor: "#fff",
+        headerTintColor: "#FF0000",
       }}
     >
       <Tab.Screen
@@ -50,11 +50,7 @@ const TabRoutes = () => {
             fontFamily: "Roboto",
           },
           tabBarIcon: ({ color }) => (
-            <Feather
-              name="search"
-              color={color}
-              size={32}
-            />
+            <Feather name="search" color={color} size={32} />
           ),
         }}
       />
@@ -82,7 +78,11 @@ const TabRoutes = () => {
             fontFamily: "Roboto",
           },
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="playlist-music" color={color} size={32} />
+            <MaterialCommunityIcons
+              name="playlist-music"
+              color={color}
+              size={32}
+            />
           ),
         }}
       />

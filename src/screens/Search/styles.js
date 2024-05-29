@@ -28,6 +28,9 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     alignContent: "center",
   },
+  scroll: {
+    width: "100%",
+  },
 });
 
 export default styles;
