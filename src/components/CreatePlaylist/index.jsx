@@ -1,31 +1,65 @@
 import React, { useState } from 'react';
-import { createPlaylist } from '../services/api';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { createPlaylist } from '../../data/Playlists/Playlist'
+import { useAuth } from '../../context/AuthContext';
 
 const PlaylistForm = ({ onPlaylistCreated }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [duration, setDuration] = useState('');
-  const [userId, setUserId] = useState('');
+  const { user } = useAuth();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     try {
-      await createPlaylist({ name, description, duration, user_id: userId });
+      await createPlaylist({ name, description, duration, user_id: user.id });
       onPlaylistCreated();
+      setName('');
+      setDescription('');
+      setDuration('');
+
     } catch (error) {
       console.error('Error creating playlist:', error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" required />
-      <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description" required />
-      <input type="number" value={duration} onChange={(e) => setDuration(e.target.value)} placeholder="Duration" required />
-      <input type="number" value={userId} onChange={(e) => setUserId(e.target.value)} placeholder="User ID" required />
-      <button type="submit">Create Playlist</button>
-    </form>
+    <View>
+      <TextInput
+        style={styles.input}
+        value={name}
+        onChangeText={setName}
+        placeholder="Name"
+        required
+      />
+      <TextInput
+        style={styles.input}
+        value={description}
+        onChangeText={setDescription}
+        placeholder="Description"
+        required
+      />
+      <TextInput
+        style={styles.input}
+        value={duration}
+        onChangeText={setDuration}
+        placeholder="Duration"
+        keyboardType="numeric"
+        required
+      />
+      <Text>User: {user.name}</Text>
+      <Button title="Create Playlist" onPress={handleSubmit} />
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    padding: 10,
+  },
+});
 
 export default PlaylistForm;

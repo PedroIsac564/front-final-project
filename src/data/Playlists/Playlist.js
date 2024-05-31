@@ -2,7 +2,7 @@ import axios from "axios";
 
 const url_API = "http://localhost:3000/playlist";
 
-const fetchApiPlaylists = async () => {
+export const fetchApiPlaylists = async () => {
   try {
     const response = await axios.get(url_API);
     return response.data;
@@ -19,7 +19,7 @@ const fetchApiPlaylists = async () => {
   }
 };
 
-const fetchApiPlaylistById = async (id) => {
+export const fetchApiPlaylistById = async (id) => {
   const url = `${url_API}/${id}/details`;
   try {
     const response = await axios.get(url);
@@ -37,6 +37,53 @@ const fetchApiPlaylistById = async (id) => {
   }
 };
 
-export default fetchApiPlaylistById;
+export const getAllPlaylists = async () => {
+  try {
+    const response = await axios.get(url_API);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 
-export { fetchApiPlaylists, fetchApiPlaylistById };
+}
+
+export const deletePlaylist = async (id) => {
+  try {
+    const response = await axios.delete(`${url_API}/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+
+}
+
+export const getPlaylistDetails = async (id) => {
+  try {
+    const response = await axios.get(`${url_API}/${id}/details`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+
+
+}
+
+export const addMusicToPlaylist = async ({ playlistId, musicId }) => {
+  try {
+    const response = await axios.post(`${url_API}/${playlistId}/music/${musicId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export const createPlaylist = async ({ name, description, duration, user_id }) => {
+  try {
+    const response = await axios.post(`${url_API}/playlist`, { name, description, duration, user_id });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+

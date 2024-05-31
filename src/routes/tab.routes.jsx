@@ -3,7 +3,7 @@ import Feather from "react-native-vector-icons/Feather";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Home from "../screens/Home";
-import Playlists from "../screens/Playlists";
+import PlaylistsScreen from "../screens/Playlists";
 import Users from "../screens/Users";
 import SignUp from "../screens/SignUp";
 import SignIn from "../screens/SignIn";
@@ -115,14 +115,6 @@ const TabRoutes = () => {
           ),
         }}
       />
-      <Tab.Screen
-        name="Playlists"
-        component={Playlists}
-        options={{
-          tabBarButton: () => null, 
-          tabBarVisible: false, 
-        }}
-      />
 
       {/* <Tab.Screen
         name="MusicPlayer"
@@ -138,6 +130,23 @@ const TabRoutes = () => {
           ),
         }}
       /> */}
+      
+      <Tab.Screen
+        name="Playlists"
+        component={PlaylistsScreen}
+        options={{
+          tabBarLabel: "Playlists",
+          tabBarLabelStyle: {
+            fontSize: 14,
+            fontFamily: "Roboto",
+          },
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="playlist-music" color={color} size={32} />
+          ),
+        }}
+        />
+
+
     </Tab.Navigator>
   );
 };
