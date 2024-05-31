@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const url_API = "http://localhost:3000/playlist";
+const url_API2 = "http:/localhost:3000";
 
 export const fetchApiPlaylists = async () => {
   try {
@@ -70,7 +71,7 @@ export const getPlaylistDetails = async (id) => {
 
 export const addMusicToPlaylist = async ({ playlistId, musicId }) => {
   try {
-    const response = await axios.post(`${url_API}/${playlistId}/music/${musicId}`);
+    const response = await axios.post(`${url_API2}/${playlistId}/music/${musicId}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -79,7 +80,13 @@ export const addMusicToPlaylist = async ({ playlistId, musicId }) => {
 
 export const createPlaylist = async ({ name, description, duration, user_id }) => {
   try {
-    const response = await axios.post(`${url_API}/playlist`, { name, description, duration, user_id });
+    const response = await axios.post(`${url_API2}/playlist`, 
+    { 
+      name:name,
+      description: description,
+      duration: duration, 
+      user_id: user_id });
+    console.log("data", response.data)
     return response.data;
   } catch (error) {
     throw error;

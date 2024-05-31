@@ -7,13 +7,13 @@ import { fetchApiMusics } from "../../data/Musics/Music";
 import PlaylistList from "../../components/Playlist";
 import PlaylistDetails from "../../components/PlaylistDetails";
 import PlaylistForm from "../../components/CreatePlaylist";
-import Search from "../../components/Search";
 
 export default function PlaylistsScreen() {
   const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
   const [playlistData, setPlaylistData] = useState(null);
   const [allPlaylists, setAllPlaylists] = useState([]);
   const [allMusics, setAllMusics] = useState([]);
+  const [completed, setCompleted] = useState(false); 
   const navigation = useNavigation();
   
 
@@ -76,8 +76,16 @@ export default function PlaylistsScreen() {
 
   return (
     <ScrollView style={styles.scrollView}>
-      <PlaylistForm />
-      <Search />
+      <PlaylistForm onPlaylistCreated={handlePlaylistCreated} onComplete={setCompleted} />
+      {completed ? (
+        <View>
+          <Search />
+          <PlaylistDetails />
+          <PlaylistList />
+        </View>
+      ) : (
+        <Text>Erro ao criar playlist</Text>
+      )}
     </ScrollView>
   );
 }

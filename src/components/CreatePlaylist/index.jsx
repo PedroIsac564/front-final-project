@@ -1,24 +1,30 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import { createPlaylist } from '../../data/Playlists/Playlist'
+import { createPlaylist } from '../../data/Playlists/Playlist';
 import { useAuth } from '../../context/AuthContext';
 
-const PlaylistForm = ({ onPlaylistCreated }) => {
+const PlaylistForm = ({ onPlaylistCreated, onComplete }) => {
+  const { user } = useAuth();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [duration, setDuration] = useState('');
-  const { user } = useAuth();
+  const [error, setError] = useState(null);
 
+  console.log(user.id, name, description, duration)
   const handleSubmit = async () => {
     try {
-      await createPlaylist({ name, description, duration, user_id: user.id });
+      console.log("enviou");
+      await createPlaylist({ name: name, description: description, duration: duration, user_id: user.id });
+      console.log(createPlaylist)
       onPlaylistCreated();
       setName('');
       setDescription('');
       setDuration('');
-
+      onComplete(true); 
     } catch (error) {
       console.error('Error creating playlist:', error);
+      setError('Erro ao criar playlist');
+      onComplete(false); 
     }
   };
 
@@ -48,6 +54,7 @@ const PlaylistForm = ({ onPlaylistCreated }) => {
       />
       <Text>User: {user.name}</Text>
       <Button title="Create Playlist" onPress={handleSubmit} />
+      {error && <Text style={styles.error}>{error}</Text>}
     </View>
   );
 };
@@ -59,6 +66,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 10,
     padding: 10,
+  },
+  error: {
+    color: 'red',
+    marginTop: 10,
   },
 });
 
