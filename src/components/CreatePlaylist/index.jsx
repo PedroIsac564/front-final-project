@@ -15,7 +15,6 @@ const PlaylistForm = ({ onPlaylistCreated, onComplete }) => {
     try {
       console.log("enviou");
       await createPlaylist({ name: name, description: description, duration: duration, user_id: user.id });
-      console.log(createPlaylist)
       onPlaylistCreated();
       setName('');
       setDescription('');

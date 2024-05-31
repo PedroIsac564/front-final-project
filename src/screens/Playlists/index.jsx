@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import Title from "../../components/Title";
 import { fetchApiPlaylists, fetchApiPlaylistById, addMusicToPlaylist } from "../../data/Playlists/Playlist";
 import { fetchApiMusics } from "../../data/Musics/Music";
+import Search from "../../components/Search";
 import PlaylistList from "../../components/Playlist";
 import PlaylistDetails from "../../components/PlaylistDetails";
 import PlaylistForm from "../../components/CreatePlaylist";
@@ -80,8 +81,8 @@ export default function PlaylistsScreen() {
       {completed ? (
         <View>
           <Search />
-          <PlaylistDetails />
-          <PlaylistList />
+          {/* <PlaylistDetails /> */}
+          <PlaylistList /> 
         </View>
       ) : (
         <Text>Erro ao criar playlist</Text>
@@ -123,6 +124,7 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
     backgroundColor: '#fff',
+    marginBottom: 20
   },
   container: {
     flex: 1,
