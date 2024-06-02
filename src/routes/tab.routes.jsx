@@ -8,7 +8,7 @@ import Users from "../screens/Users";
 import SignUp from "../screens/SignUp";
 import SignIn from "../screens/SignIn";
 import Search from "../screens/Search";
-import Player from "../screens/Player";
+import MusicPlayer from "../screens/MusicPlayer/MusicPlayer";
 
 const Tab = createBottomTabNavigator();
 
@@ -116,6 +116,20 @@ const TabRoutes = () => {
         }}
       />
       <Tab.Screen
+        name="MusicPlayer"
+        component={MusicPlayer}
+        options={{
+          tabBarLabel: "Player",
+          tabBarLabelStyle: {
+            fontSize: 14,
+            fontFamily: "Roboto",
+          },
+          tabBarIcon: ({ color }) => (
+            <Feather name="play-circle" color={color} size={32} />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="Playlists"
         component={Playlists}
         options={{
@@ -124,24 +138,6 @@ const TabRoutes = () => {
         }}
       />
 
-      <Tab.Screen
-        name="Player"
-        component={Player}
-        options={{
-          tabBarLabel: "Player",
-          tabBarLabelStyle: {
-            fontSize: 14,
-            fontFamily: "Roboto",
-          },
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              name="music-circle"
-              color={color}
-              size={32}
-            />
-          ),
-        }}
-      />
     </Tab.Navigator>
   );
 };
