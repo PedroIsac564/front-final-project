@@ -48,6 +48,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
+  textTitle: {
+    color: "#fff",
+    fontSize: 20,
+  },
 });
 
 export default styles;

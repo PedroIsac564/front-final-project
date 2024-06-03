@@ -43,18 +43,18 @@ export default function Users() {
 
         <View style={styles.userSeparetad}>
           <View style={styles.emailDiv}>
-            <Text style={styles.text}>Email:</Text>
+            <Text style={styles.textTitle}>Email:</Text>
             <Text style={styles.text}>{user?.email}</Text>
           </View>
 
           <View style={styles.ageDiv}>
-            <Text style={styles.text}>Age:</Text>
+            <Text style={styles.textTitle}>Age:</Text>
             <Text style={styles.text}>{ages}</Text>
           </View>
         </View>
 
         <View style={styles.playlistDiv}>
-          <Text style={styles.text}>Playlist:</Text>
+          <Text style={styles.textTitle}>Playlist:</Text>
           <Text style={styles.text}>{user?.playlist}</Text>
         </View>
       </View>
