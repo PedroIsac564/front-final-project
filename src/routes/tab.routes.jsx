@@ -76,7 +76,7 @@ const TabRoutes = () => {
         name="Users"
         component={Users}
         options={{
-          tabBarLabel: "Usuários",
+          tabBarLabel: "Perfil",
           tabBarLabelStyle: {
             fontSize: 14,
             fontFamily: "Roboto",
@@ -119,8 +119,8 @@ const TabRoutes = () => {
         name="Playlists"
         component={Playlists}
         options={{
-          tabBarButton: () => null, 
-          tabBarVisible: false, 
+          tabBarButton: () => null,
+          tabBarVisible: false,
         }}
       />
 
