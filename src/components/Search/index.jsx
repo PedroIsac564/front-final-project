@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { fetchApiMusics, addMusicToPlaylist } from "../../data/Musics/Music";
-import MusicCardSearch from "../Musics/MusicCardSearch"
+import MusicCardSearch from "../Musics/MusicCardSearch";
 import styles from "./styles";
 
-export default function Search({ musicId }) {
+export default function Search({ selectedPlaylistId, fetchAllPlaylists }) {
   const [apiData, setApiData] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
@@ -17,7 +17,6 @@ export default function Search({ musicId }) {
       setSearchMade(false);
       return;
     }
-   
     const fetchData = async () => {
       setLoading(true);
       setSearchMade(true);
@@ -45,6 +44,7 @@ export default function Search({ musicId }) {
       console.error("Erro ao adicionar música à playlist: ", error);
     }
   };
+
   const updateSearch = (search) => {
     setSearch(search);
   };
@@ -116,9 +116,9 @@ export default function Search({ musicId }) {
                   image={item.image}
                   artist={item.artist}
                 />
-                <TouchableOpacity onPress={() => handleAddMusicToPlaylist(musicId)}>
-    <Text style={styles.addButton}>Adicionar à Playlist</Text>
-  </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleAddMusicToPlaylist(item.id)}>
+                  <Text style={styles.addButton}>Adicionar à Playlist👨👩</Text>
+                </TouchableOpacity>
               </View>
             ))
           )}
