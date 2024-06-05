@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { fetchApiPlaylists, deletePlaylist } from '../../data/Playlists/Playlist';
 
-const PlaylistList = ({ onPlaylistSelect }) => {
+const   PlaylistList = ({ onPlaylistSelect }) => {
   const [playlists, setPlaylists] = useState([]);
   console.log(playlists)
 

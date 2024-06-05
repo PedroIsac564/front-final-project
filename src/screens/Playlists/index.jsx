@@ -80,8 +80,8 @@ export default function PlaylistsScreen() {
       {completed ? (
         <View>
           <Search selectedPlaylistId={selectedPlaylistId} fetchAllPlaylists={fetchAllPlaylists} />
-          <PlaylistDetails />
           <PlaylistList />
+          <PlaylistDetails playlistId={selectedPlaylistId}  />
         </View>
       ) : (
         <Text>Erro ao criar playlist</Text>
