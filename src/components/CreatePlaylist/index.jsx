@@ -18,7 +18,6 @@ const PlaylistForm = ({ onPlaylistCreated, onComplete }) => {
       onPlaylistCreated();
       setName('');
       setDescription('');
-      setDuration('');
       onComplete(true); 
     } catch (error) {
       console.error('Error creating playlist:', error);
@@ -46,7 +45,7 @@ const PlaylistForm = ({ onPlaylistCreated, onComplete }) => {
       <TextInput
         style={styles.input}
         value={duration}
-        onChangeText={setDuration}
+        onChangeText={Number(setDuration)}
         placeholder="Duration"
         keyboardType="numeric"
         required
