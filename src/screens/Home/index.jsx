@@ -34,7 +34,7 @@ export default function Home() {
         console.log(musicData);
         console.log("playlists "+playlistResponse);
         setApiData(musicData.musics);
-        setPlaylistData(playlistResponse.playlist);
+        setPlaylistData(playlistResponse.data.playlist);
       } catch (error) {
         console.error("Erro ao buscar dados: ", error);
         setPlaylistData([]); 
