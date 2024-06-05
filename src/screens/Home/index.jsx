@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -6,11 +7,12 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import { useEffect, useState } from "react";
 import Carousel from "react-native-snap-carousel";
 import styles from "./styles";
-import{ fetchApiMusics } from "../../data/Musics/Music";
-import { fetchApiPlaylistByUserIndividually, fetchApiPlaylists } from "../../data/Playlists/Playlist";
+import {
+  fetchApiMusics,
+} from "../../data/Musics/Music";
+import { fetchApiPlaylistByUserIndividually } from "../../data/Playlists/Playlist";
 import MusicCard from "../../components/Musics/MusicCard";
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../context/AuthContext";
@@ -25,25 +27,23 @@ export default function Home() {
     const fetchData = async () => {
       try {
         const musicData = await fetchApiMusics();
-        let playlistResponse; 
+        let playlistResponse = { playlists: [] };
         if (user.id !== undefined) {
           playlistResponse = await fetchApiPlaylistByUserIndividually(user.id);
-          console.log(playlistResponse); 
+          console.log(playlistResponse);
+          setPlaylistData(playlistResponse?.playlists || []);
         }
-        
+
         console.log(musicData);
-        console.log("playlists "+ playlistResponse.playlists);
+        console.log("playlists " + playlistResponse.playlists);
         setApiData(musicData.musics);
-        setPlaylistData(playlistResponse.playlists);
       } catch (error) {
         console.error("Erro ao buscar dados: ", error);
-        setPlaylistData([]); 
+        setPlaylistData([]);
       }
     };
     fetchData();
   }, []);
-  
-  
 
   const renderPlaylistItem = ({ item }) => (
     <TouchableOpacity
@@ -77,21 +77,20 @@ export default function Home() {
           style={styles.logo}
         />
         <Text style={styles.title}>Playlists</Text>
-        { user.id === undefined ? (
-      <Text style={styles.loadingText}>Let the beat flow</Text>
-    ) : (playlistData === undefined ? (
-      <Carousel
-        data={playlistData}
-        renderItem={renderPlaylistItem}
-        sliderWidth={width}
-        itemWidth={220}
-        activeSlideAlignment="center"
-        contentContainerCustomStyle={styles.carouselContent}
-      />
-    ) : (
-      <Text style={styles.loadingText}>Carregando playlists...</Text>
-    ))}
-
+        {user.id === undefined ? (
+          <Text style={styles.loadingText}>Let the beat flow</Text>
+        ) : playlistData.length > 0 ? (
+          <Carousel
+            data={playlistData}
+            renderItem={renderPlaylistItem}
+            sliderWidth={width}
+            itemWidth={220}
+            activeSlideAlignment="center"
+            contentContainerCustomStyle={styles.carouselContent}
+          />
+        ) : (
+          <Text style={styles.loadingText}>Carregando playlists...</Text>
+        )}
 
         <Text style={styles.artistTitle}>Músicas de Kanye West</Text>
         {apiData.length > 0 ? (
