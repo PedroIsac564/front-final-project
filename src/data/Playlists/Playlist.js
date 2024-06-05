@@ -21,10 +21,14 @@ export const fetchApiPlaylists = async () => {
 };
 
 export const fetchApiPlaylistByUserIndividually = async (user_id) => {
+  console.log("user_id", user_id);
   try {
-    const response = await axios.get(`${url_API2}/playlist/${user_id}`);
-    return response.data.playlists;
+    const response = await fetch(`${url_API}/${user_id}`);
+    const data = await response.json();
+    console.log("response", data);
+    return response.data;
   } catch (error) {
+    console.log("error", error);
     throw error;
   }
 }
@@ -69,13 +73,15 @@ export const deletePlaylist = async (id) => {
 
 export const getPlaylistDetails = async (id) => {
   try {
-    const response = await axios.get(`${url_API}/${id}/details`);
-    return response.data;
+    const response = await fetch(`${url_API}/${id}/details`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
   } catch (error) {
     throw error;
   }
-
-
 }
 
 export const addMusicToPlaylist = async ({ playlistId, musicId }) => {
