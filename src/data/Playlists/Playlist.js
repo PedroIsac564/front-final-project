@@ -23,7 +23,7 @@ export const fetchApiPlaylists = async () => {
 export const fetchApiPlaylistByUserIndividually = async (user_id) => {
   try {
     const response = await axios.get(`${url_API2}/playlist/${user_id}`);
-    return response.data;
+    return response.data.playlists;
   } catch (error) {
     throw error;
   }
@@ -89,7 +89,8 @@ export const addMusicToPlaylist = async ({ playlistId, musicId }) => {
 
 export const createPlaylist = async ({ name, description, duration, user_id }) => {
   try {
-    const response = await axios.post(`${url_API2}/playlist`, 
+    console.log(name, description, duration, user_id);
+    const response = await axios.post(`http://localhost:3000/playlist`, 
     { 
       name:name,
       description: description,

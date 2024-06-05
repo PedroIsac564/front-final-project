@@ -25,22 +25,25 @@ export default function Home() {
     const fetchData = async () => {
       try {
         const musicData = await fetchApiMusics();
-        if(user.id === undefined){
-        setPlaylistData([]); 
-        } else {
-          const playlistData = await fetchApiPlaylistByUserIndividually(user.id)
-          setPlaylistData(playlistData.playlists)
+        let playlistResponse; 
+        if (user.id !== undefined) {
+          playlistResponse = await fetchApiPlaylistByUserIndividually(user.id);
+          console.log(playlistResponse); 
         }
-          
+        
         console.log(musicData);
-        console.log(playlistData);
+        console.log("playlists "+playlistResponse);
         setApiData(musicData.musics);
+        setPlaylistData(playlistResponse.playlist);
       } catch (error) {
         console.error("Erro ao buscar dados: ", error);
+        setPlaylistData([]); 
       }
     };
     fetchData();
   }, []);
+  
+  
 
   const renderPlaylistItem = ({ item }) => (
     <TouchableOpacity
@@ -76,7 +79,7 @@ export default function Home() {
         <Text style={styles.title}>Playlists</Text>
         { user.id === undefined ? (
       <Text style={styles.loadingText}>Let the beat flow</Text>
-    ) : (playlistData.length > 0 ? (
+    ) : (playlistData === undefined ? (
       <Carousel
         data={playlistData}
         renderItem={renderPlaylistItem}

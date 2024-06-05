@@ -11,6 +11,16 @@ const PlaylistForm = ({ onPlaylistCreated, onComplete }) => {
   const [error, setError] = useState(null);
 
   console.log(user.id, name, description, duration)
+
+  // Função para garantir que o valor de duration seja um número decimal
+  const handleDurationChange = (value) => {
+    if (!isNaN(parseFloat(value))) {
+      setDuration(parseFloat(value).toFixed(2)); 
+    } else {
+      setDuration('');
+    }
+  };
+
   const handleSubmit = async () => {
     try {
       console.log("enviou");
@@ -45,7 +55,7 @@ const PlaylistForm = ({ onPlaylistCreated, onComplete }) => {
       <TextInput
         style={styles.input}
         value={duration}
-        onChangeText={Number(setDuration)}
+        onChangeText={handleDurationChange} 
         placeholder="Duration"
         keyboardType="numeric"
         required
