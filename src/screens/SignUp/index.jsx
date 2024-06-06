@@ -4,7 +4,6 @@ import styles from "./styles";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
-import DateTimePicker from '@react-native-community/datetimepicker';
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import SuccessMessage from "../../components/SuccessMessage/SuccessMessage";
 
@@ -14,9 +13,6 @@ export default function SignUp({route}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [birthdate, setBirthDate] = useState("");
-  const [show, setShow] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
@@ -38,50 +34,18 @@ export default function SignUp({route}) {
       setName(user.name)
       setEmail(user.email)
       setPassword(user.password)
-      setBirthDate(user.birthdate)
+      
       setIsUpdate(true)
     } else {
       setIsUpdate(false)
       setName("");
       setEmail("");
       setPassword("");
-      setBirthDate("");
+      
     }
   }, [user])
 
 
-
-
-
-
-  const reverseFormatDate = (dateString) => {
-    const [day, month, year] = dateString.split('/');
-    const date = new Date(year, month - 1, day);
-    return date;
-};
-const formatDate = (dateF) => {
-  const date = new Date(dateF);
-  const day = date.getDate().toString().padStart(2, '0');
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const year = date.getFullYear();
-
-  return `${day}/${month}/${year}`;
-};
-
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setShow(false);
-    if(edit == false){
-        setDate(currentDate);
-    } else {
-        setDate(reverseFormatDate(conquestDate));
-    }
-    setBirthDate(formatDate(currentDate));
-  };
-  
-    const showDatepicker = () => {
-        setShow(true);
-    };
 
   const toggleSecureEntry = () => {
     setSecureTextEntry(!secureTextEntry);
@@ -135,7 +99,7 @@ const formatDate = (dateF) => {
         name,
         email,
         password,
-        birthdate,
+
       });
       console.log("response: ", response.data);
       setSuccess("Cadastro realizado com sucesso!");
@@ -143,7 +107,7 @@ const formatDate = (dateF) => {
       setName("");
       setEmail("");
       setPassword("");
-      setBirthDate("");
+
       navigation.navigate("SignIn");
     } catch (error) {
       console.error("Erro ao fazer cadastro: ", error);
@@ -196,32 +160,6 @@ const formatDate = (dateF) => {
         />
       </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.buttonDate} onPress={showDatepicker}>
-                <Text style={styles.buttonText}>Selecionar Data 🗓</Text>
-            </TouchableOpacity>
-      { isUpdate == true ? <Text style={styles.Textdate}>{birthdate}</Text> : 
-            <Text style={styles.Textdate}>{formatDate(date)}</Text>
-            }
-      {show && (
-        <DateTimePicker
-            testID='dateTimePicker'
-            value={date}
-            mode={'date'}
-            is24Hour={true}
-            display="default"
-            onChange={onChange}
-        />
-
-      )}
-      
-      {/* test */}
-       <TextInput
-        style={styles.input}
-        placeholder="birthdate"
-        value={birthdate}
-        onChangeText={setBirthDate}
-      />
-      {/* test */}
       <TouchableOpacity
         style={styles.button}
         onPress={handleSignUp}

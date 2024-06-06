@@ -81,17 +81,7 @@ export default function PlaylistsScreen() {
       {completed ? (
         <View>
           <Search selectedPlaylistId={selectedPlaylistId} fetchAllPlaylists={fetchAllPlaylists} />
-          <PlaylistDetails />
           <PlaylistList />
-          {allPlaylists.map((playlist) => (
-        <PlaylistCard
-          key={playlist.id}
-          name={playlist.name}
-          description={playlist.description}
-          duration={playlist.duration}
-          user={playlist.user}
-        />
-      ))}
         </View>
       ) : (
         <Text>Erro ao criar playlist</Text>

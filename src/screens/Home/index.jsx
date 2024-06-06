@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -6,30 +7,39 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import { useEffect, useState } from "react";
 import Carousel from "react-native-snap-carousel";
 import styles from "./styles";
-import{ fetchApiMusics } from "../../data/Musics/Music";
-import { fetchApiPlaylists } from "../../data/Playlists/Playlist";
+import {
+  fetchApiMusics,
+} from "../../data/Musics/Music";
+import { fetchApiPlaylistByUserIndividually } from "../../data/Playlists/Playlist";
 import MusicCard from "../../components/Musics/MusicCard";
 import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Home() {
   const [apiData, setApiData] = useState([]);
   const [playlistData, setPlaylistData] = useState([]);
   const navigation = useNavigation();
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const musicData = await fetchApiMusics();
-        const playlistData = await fetchApiPlaylists();
+        let playlistResponse = { playlists: [] };
+        if (user.id !== undefined) {
+          playlistResponse = await fetchApiPlaylistByUserIndividually(user.id);
+          console.log(playlistResponse);
+          setPlaylistData(playlistResponse?.playlists || []);
+        }
+
         console.log(musicData);
-        console.log(playlistData);
+        console.log("playlists " + playlistResponse.playlists);
         setApiData(musicData.musics);
-        setPlaylistData(playlistData.playlists);
       } catch (error) {
         console.error("Erro ao buscar dados: ", error);
+        setPlaylistData([]);
       }
     };
     fetchData();
@@ -67,12 +77,14 @@ export default function Home() {
           style={styles.logo}
         />
         <Text style={styles.title}>Playlists</Text>
-        {playlistData.length > 0 ? (
+        {user.id === undefined ? (
+          <Text style={styles.loadingText}>Let the beat flow</Text>
+        ) : playlistData.length > 0 ? (
           <Carousel
             data={playlistData}
             renderItem={renderPlaylistItem}
             sliderWidth={width}
-            itemWidth={width - 60}
+            itemWidth={220}
             activeSlideAlignment="center"
             contentContainerCustomStyle={styles.carouselContent}
           />

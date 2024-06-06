@@ -1,25 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { fetchApiPlaylists, deletePlaylist } from '../../data/Playlists/Playlist';
+import { deletePlaylist } from '../../data/Playlists/Playlist';
 
-const PlaylistList = ({ onPlaylistSelect }) => {
+const   PlaylistList = ({ onPlaylistSelect }) => {
   const [playlists, setPlaylists] = useState([]);
   console.log(playlists)
 
-  const fetchPlaylists = async () => {
-    try {
-      const response = await fetchApiPlaylists()
-      console.log(response.playlists)
-      setPlaylists(response.playlists);
-    } catch (error) {
-      console.error('Error fetching playlists:', error);
-    }
-  };
 
   const handleDelete = async (id) => {
     try {
       await deletePlaylist(id);
-      fetchPlaylists();
     } catch (error) {
       console.error('Error deleting playlist:', error);
     }
