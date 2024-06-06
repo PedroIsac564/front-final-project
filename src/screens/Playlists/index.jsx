@@ -8,6 +8,7 @@ import PlaylistList from "../../components/Playlist";
 import PlaylistDetails from "../../components/PlaylistDetails";
 import PlaylistForm from "../../components/CreatePlaylist";
 import Search from "../../components/Search";
+import PlaylistCard from "../../components/PlaylistCard";
 
 export default function PlaylistsScreen() {
   const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
@@ -82,6 +83,15 @@ export default function PlaylistsScreen() {
           <Search selectedPlaylistId={selectedPlaylistId} fetchAllPlaylists={fetchAllPlaylists} />
           <PlaylistDetails />
           <PlaylistList />
+          {allPlaylists.map((playlist) => (
+        <PlaylistCard
+          key={playlist.id}
+          name={playlist.name}
+          description={playlist.description}
+          duration={playlist.duration}
+          user={playlist.user}
+        />
+      ))}
         </View>
       ) : (
         <Text>Erro ao criar playlist</Text>
